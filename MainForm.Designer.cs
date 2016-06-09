@@ -38,13 +38,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.statsGrid = new System.Windows.Forms.DataGridView();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MinPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TenPercentPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AddedLastDay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MarketCapColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SpacerColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.statsGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,6 +57,8 @@
             // 
             this.statsGrid.AllowUserToAddRows = false;
             this.statsGrid.AllowUserToDeleteRows = false;
+            this.statsGrid.AllowUserToResizeColumns = false;
+            this.statsGrid.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -81,16 +83,6 @@
             this.statsGrid.Size = new System.Drawing.Size(1019, 840);
             this.statsGrid.TabIndex = 0;
             // 
-            // progressBar
-            // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(3, 7);
-            this.progressBar.MarqueeAnimationSpeed = 20;
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(1013, 23);
-            this.progressBar.TabIndex = 1;
-            // 
             // NameColumn
             // 
             this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -101,7 +93,7 @@
             this.NameColumn.HeaderText = "Name";
             this.NameColumn.Name = "NameColumn";
             this.NameColumn.ReadOnly = true;
-            this.NameColumn.Width = 68;
+            this.NameColumn.Width = 70;
             // 
             // MinPriceColumn
             // 
@@ -113,7 +105,7 @@
             this.MinPriceColumn.HeaderText = "MinPrice (chaos)";
             this.MinPriceColumn.Name = "MinPriceColumn";
             this.MinPriceColumn.ReadOnly = true;
-            this.MinPriceColumn.Width = 137;
+            this.MinPriceColumn.Width = 139;
             // 
             // TenPercentPriceColumn
             // 
@@ -125,7 +117,7 @@
             this.TenPercentPriceColumn.HeaderText = "10% Price (chaos)";
             this.TenPercentPriceColumn.Name = "TenPercentPriceColumn";
             this.TenPercentPriceColumn.ReadOnly = true;
-            this.TenPercentPriceColumn.Width = 147;
+            this.TenPercentPriceColumn.Width = 149;
             // 
             // AddedLastDay
             // 
@@ -137,7 +129,7 @@
             this.AddedLastDay.HeaderText = "Added in Last Day";
             this.AddedLastDay.Name = "AddedLastDay";
             this.AddedLastDay.ReadOnly = true;
-            this.AddedLastDay.Width = 147;
+            this.AddedLastDay.Width = 149;
             // 
             // MarketCapColumn
             // 
@@ -149,7 +141,7 @@
             this.MarketCapColumn.HeaderText = "MarketCap (10% Price * AddedLastDay)";
             this.MarketCapColumn.Name = "MarketCapColumn";
             this.MarketCapColumn.ReadOnly = true;
-            this.MarketCapColumn.Width = 283;
+            this.MarketCapColumn.Width = 285;
             // 
             // SpacerColumn
             // 
@@ -160,6 +152,16 @@
             this.SpacerColumn.HeaderText = "";
             this.SpacerColumn.Name = "SpacerColumn";
             this.SpacerColumn.ReadOnly = true;
+            // 
+            // progressBar
+            // 
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.Location = new System.Drawing.Point(3, 7);
+            this.progressBar.MarqueeAnimationSpeed = 20;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(1013, 23);
+            this.progressBar.TabIndex = 1;
             // 
             // MainForm
             // 

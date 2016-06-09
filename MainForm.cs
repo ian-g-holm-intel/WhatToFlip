@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using PoeTradeMonitorClient;
@@ -11,6 +12,7 @@ namespace WhatToFlip
         void InvokeGrid(Action action);
         void Message(string message);
         bool InProgress { set; }
+        void SortByMarketValue();
     }
 
     public partial class MainForm : Form, IMainForm
@@ -24,6 +26,14 @@ namespace WhatToFlip
             statsGuiItems = new SortableBindingList<StatsGuiItem>();
             statsGrid.DataSource = statsGuiItems;
             controller = new MainFormController(this);
+        }
+
+        public void SortByMarketValue()
+        {
+            statsGrid.InvokeIfRequired(() =>
+            {
+                statsGrid.Sort(MarketCapColumn, ListSortDirection.Descending);
+            });
         }
 
         public void InvokeGrid(Action action)

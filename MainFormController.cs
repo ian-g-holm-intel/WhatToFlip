@@ -23,7 +23,7 @@ namespace WhatToFlip
             guiInterface.InProgress = true;
             ThreadPool.QueueUserWorkItem(parameters =>
             {
-                var uniques = exileToolsClient.GetUniques();
+                var uniques = exileToolsClient.GetItemStats();
                 guiInterface.InProgress = false;
                 guiInterface.InvokeGrid(() =>
                 {
@@ -38,6 +38,7 @@ namespace WhatToFlip
                         };
                         guiInterface.UpdateItem(newItem);
                     }
+                    guiInterface.SortByMarketValue();
                 });
             });
         }
@@ -57,15 +58,29 @@ namespace WhatToFlip
             }
         }
 
-        public List<ItemStatsBucket> GetUniques()
+        public List<ItemStatsBucket> GetItemStats()
         {
-            string jsonData ="{\"query\":{\"bool\":{\"must\":[{\"term\":{\"attributes.league\":{\"value\":\"Prophecy\"}}},{\"term\":{\"shop.hasPrice\":{\"value\":\"true\"}}}],\"must_not\":[{\"term\":{\"attributes.rarity\":{\"value\":\"Magic\"}}},{\"term\":{\"attributes.rarity\":{\"value\":\"Rare\"}}},{\"term\":{\"attributes.rarity\":{\"value\":\"Currency\"}}},{\"term\":{\"attributes.rarity\":{\"value\":\"Gem\"}}}]}},\"aggs\":{\"uniqueNames\":{\"terms\":{\"field\":\"info.fullName\",\"size\":100,\"order\":{\"minPrice\":\"desc\"}},\"aggs\":{\"avgPrice\":{\"percentiles\":{\"field\":\"shop.chaosEquiv\",\"percents\":[1,10,20,30,50]}},\"minPrice\":{\"min\":{\"field\":\"shop.chaosEquiv\"}},\"timeAdded\":{\"date_histogram\":{\"field\":\"shop.added\",\"interval\":\"1d\",\"time_zone\":\"-08:00\"}}}}},\"size\":0}";
+            string jsonData = "{\"query\":{\"bool\":{\"must\":[{\"term\":{\"attributes.league\":{\"value\":\"Prophecy\"}}},{\"term\":{\"shop.hasPrice\":{\"value\":\"true\"}}}],\"must_not\":[{\"term\":{\"attributes.rarity\":{\"value\":\"Magic\"}}},{\"term\":{\"attributes.rarity\":{\"value\":\"Rare\"}}},{\"term\":{\"attributes.rarity\":{\"value\":\"Currency\"}}},{\"term\":{\"attributes.rarity\":{\"value\":\"Gem\"}}}]}},\"aggs\":{\"uniqueNames\":{\"terms\":{\"field\":\"info.fullName\",\"size\":100,\"order\":{\"minPrice\":\"desc\"}},\"aggs\":{\"avgPrice\":{\"percentiles\":{\"field\":\"shop.chaosEquiv\",\"percents\":[1,10,20,30,50]}},\"minPrice\":{\"min\":{\"field\":\"shop.chaosEquiv\"}},\"timeAdded\":{\"date_histogram\":{\"field\":\"shop.added\",\"interval\":\"1d\",\"time_zone\":\"-08:00\"}}}}},\"size\":0}";
             using (var client = new WebClient())
             {
                 client.Headers[HttpRequestHeader.Authorization] = "DEVELOPMENT-Indexer";
                 client.Headers[HttpRequestHeader.ContentType] = "application/json";
                 var result = client.UploadString(@"http://api.exiletools.com/index/_search?pretty", "POST", jsonData);
-                var response = JsonConvert.DeserializeObject<UniqueItemsResponse>(result);
+                var response = JsonConvert.DeserializeObject<ItemStatsResponse>(result);
+                return response.aggregations.uniqueNames.buckets;
+            }
+        }
+
+        public List<ItemStatsBucket> GetMinPrices()
+        {
+            string jsonData = "{\"query\":{\"bool\":{\"must\":[{\"term\":{\"attributes.league\":{\"value\":\"Prophecy\"}}},{\"term\":{\"shop.hasPrice\":{\"value\":\"true\"}}}],\"must_not\":[{\"term\":{\"attributes.rarity\":{\"value\":\"Magic\"}}},{\"term\":{\"attributes.rarity\":{\"value\":\"Rare\"}}},{\"term\":{\"attributes.rarity\":{\"value\":\"Currency\"}}},{\"term\":{\"attributes.rarity\":{\"value\":\"Gem\"}}}]}},\"aggs\":{\"uniqueNames\":{\"terms\":{\"field\":\"info.fullName\",\"size\":100,\"order\":{\"minPrice\":\"desc\"}},\"aggs\":{\"avgPrice\":{\"percentiles\":{\"field\":\"shop.chaosEquiv\",\"percents\":[1,10,20,30,50]}},\"minPrice\":{\"min\":{\"field\":\"shop.chaosEquiv\"}},\"timeAdded\":{\"date_histogram\":{\"field\":\"shop.added\",\"interval\":\"1d\",\"time_zone\":\"-08:00\"}}}}},\"size\":0}";
+
+            using (var client = new WebClient())
+            {
+                client.Headers[HttpRequestHeader.Authorization] = "DEVELOPMENT-Indexer";
+                client.Headers[HttpRequestHeader.ContentType] = "application/json";
+                var result = client.UploadString(@"http://api.exiletools.com/index/_search?pretty", "POST", jsonData);
+                var response = JsonConvert.DeserializeObject<ItemStatsResponse>(result);
                 return response.aggregations.uniqueNames.buckets;
             }
         }
