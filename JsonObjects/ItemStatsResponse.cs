@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace WhatToFlip.JsonObjects
 {
+
     public class ItemStatsShards
     {
         public int total { get; set; }
@@ -18,23 +19,30 @@ namespace WhatToFlip.JsonObjects
         public List<object> hits { get; set; }
     }
 
-    public class MinPrice
+    public class TimeAddedBucket
     {
-        public double value { get; set; }
+        public string key_as_string { get; set; }
+        public object key { get; set; }
+        public int doc_count { get; set; }
+    }
+
+    public class TimeAdded
+    {
+        public List<TimeAddedBucket> buckets { get; set; }
     }
 
     public class Values
     {
         [JsonProperty("1.0")]
         public double OnePercent { get; set; }
+        [JsonProperty("2.0")]
+        public double TwoPercent { get; set; }
+        [JsonProperty("3.0")]
+        public double ThreePercent { get; set; }
+        [JsonProperty("5.0")]
+        public double FivePercent { get; set; }
         [JsonProperty("10.0")]
         public double TenPercent { get; set; }
-        [JsonProperty("20.0")]
-        public double TwentyPercent { get; set; }
-        [JsonProperty("30.0")]
-        public double ThirtyPercent { get; set; }
-        [JsonProperty("50.0")]
-        public double FiftyPercent { get; set; }
     }
 
     public class AvgPrice
@@ -42,17 +50,19 @@ namespace WhatToFlip.JsonObjects
         public Values values { get; set; }
     }
 
-    public class HistogramBucket
+    public class MinPrice
     {
-        [JsonProperty("key_as_string")]
-        public DateTime dateTime { get; set; }
-        public object key { get; set; }
-        public int doc_count { get; set; }
+        public double value { get; set; }
     }
 
-    public class TimeAdded
+    public class MinPriceExalted
     {
-        public List<HistogramBucket> buckets { get; set; }
+        public double? value { get; set; }
+    }
+
+    public class MinPriceChaos
+    {
+        public double? value { get; set; }
     }
 
     public class ItemStatsBucket
@@ -61,12 +71,11 @@ namespace WhatToFlip.JsonObjects
         public string name { get; set; }
         [JsonProperty("doc_count")]
         public int count { get; set; }
-        [JsonProperty("minPrice")]
-        public MinPrice minPrice { get; set; }
-        [JsonProperty("avgPrice")]
-        public AvgPrice avgPrice { get; set; }
-        [JsonProperty("timeAdded")]
         public TimeAdded timeAdded { get; set; }
+        public AvgPrice avgPrice { get; set; }
+        public MinPrice minPrice { get; set; }
+        public MinPriceExalted minPriceExalted { get; set; }
+        public MinPriceChaos minPriceChaos { get; set; }
     }
 
     public class UniqueNames

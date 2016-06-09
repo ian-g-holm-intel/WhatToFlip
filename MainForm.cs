@@ -50,9 +50,11 @@ namespace WhatToFlip
                                     select guiItem).Single();
                 if(existingItem != null)
                 {
-                    existingItem.AddedLastDay = item.AddedLastDay;
+                    existingItem.SoldLastDay = item.SoldLastDay;
                     existingItem.MinPrice = item.MinPrice;
-                    existingItem.TenPercentPrice = item.TenPercentPrice;
+                    existingItem.OnePercentPrice = item.OnePercentPrice;
+                    existingItem.TwoPercentPrice = item.TwoPercentPrice;
+                    existingItem.FivePercentPrice = item.FivePercentPrice;
                 }
             }
             else

@@ -36,15 +36,19 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.statsGrid = new System.Windows.Forms.DataGridView();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MinPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TenPercentPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AddedLastDay = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OnePercentPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TwoPercentPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FivePercentPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SoldLastDayColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MarketCapColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SpacerColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.statsGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,8 +75,10 @@
             this.statsGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NameColumn,
             this.MinPriceColumn,
-            this.TenPercentPriceColumn,
-            this.AddedLastDay,
+            this.OnePercentPriceColumn,
+            this.TwoPercentPriceColumn,
+            this.FivePercentPriceColumn,
+            this.SoldLastDayColumn,
             this.MarketCapColumn,
             this.SpacerColumn});
             this.statsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -80,8 +86,18 @@
             this.statsGrid.Name = "statsGrid";
             this.statsGrid.ReadOnly = true;
             this.statsGrid.RowHeadersVisible = false;
-            this.statsGrid.Size = new System.Drawing.Size(1019, 840);
+            this.statsGrid.Size = new System.Drawing.Size(1095, 840);
             this.statsGrid.TabIndex = 0;
+            // 
+            // progressBar
+            // 
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.Location = new System.Drawing.Point(3, 7);
+            this.progressBar.MarqueeAnimationSpeed = 20;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(1089, 23);
+            this.progressBar.TabIndex = 1;
             // 
             // NameColumn
             // 
@@ -93,7 +109,7 @@
             this.NameColumn.HeaderText = "Name";
             this.NameColumn.Name = "NameColumn";
             this.NameColumn.ReadOnly = true;
-            this.NameColumn.Width = 70;
+            this.NameColumn.Width = 68;
             // 
             // MinPriceColumn
             // 
@@ -105,69 +121,83 @@
             this.MinPriceColumn.HeaderText = "MinPrice (chaos)";
             this.MinPriceColumn.Name = "MinPriceColumn";
             this.MinPriceColumn.ReadOnly = true;
-            this.MinPriceColumn.Width = 139;
+            this.MinPriceColumn.Width = 137;
             // 
-            // TenPercentPriceColumn
+            // OnePercentPriceColumn
             // 
-            this.TenPercentPriceColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.TenPercentPriceColumn.DataPropertyName = "TenPercentPrice";
+            this.OnePercentPriceColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.OnePercentPriceColumn.DataPropertyName = "OnePercentPrice";
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.White;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
-            this.TenPercentPriceColumn.DefaultCellStyle = dataGridViewCellStyle4;
-            this.TenPercentPriceColumn.HeaderText = "10% Price (chaos)";
-            this.TenPercentPriceColumn.Name = "TenPercentPriceColumn";
-            this.TenPercentPriceColumn.ReadOnly = true;
-            this.TenPercentPriceColumn.Width = 149;
+            this.OnePercentPriceColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.OnePercentPriceColumn.HeaderText = "1% Price";
+            this.OnePercentPriceColumn.Name = "OnePercentPriceColumn";
+            this.OnePercentPriceColumn.ReadOnly = true;
+            this.OnePercentPriceColumn.Width = 87;
             // 
-            // AddedLastDay
+            // TwoPercentPriceColumn
             // 
-            this.AddedLastDay.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.AddedLastDay.DataPropertyName = "AddedLastDay";
+            this.TwoPercentPriceColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.TwoPercentPriceColumn.DataPropertyName = "TwoPercentPrice";
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
-            this.AddedLastDay.DefaultCellStyle = dataGridViewCellStyle5;
-            this.AddedLastDay.HeaderText = "Added in Last Day";
-            this.AddedLastDay.Name = "AddedLastDay";
-            this.AddedLastDay.ReadOnly = true;
-            this.AddedLastDay.Width = 149;
+            this.TwoPercentPriceColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            this.TwoPercentPriceColumn.HeaderText = "2% Price";
+            this.TwoPercentPriceColumn.Name = "TwoPercentPriceColumn";
+            this.TwoPercentPriceColumn.ReadOnly = true;
+            this.TwoPercentPriceColumn.Width = 87;
+            // 
+            // FivePercentPriceColumn
+            // 
+            this.FivePercentPriceColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.FivePercentPriceColumn.DataPropertyName = "FivePercentPrice";
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            this.FivePercentPriceColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.FivePercentPriceColumn.HeaderText = "5% Price";
+            this.FivePercentPriceColumn.Name = "FivePercentPriceColumn";
+            this.FivePercentPriceColumn.ReadOnly = true;
+            this.FivePercentPriceColumn.Width = 87;
+            // 
+            // SoldLastDayColumn
+            // 
+            this.SoldLastDayColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.SoldLastDayColumn.DataPropertyName = "SoldLastDay";
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
+            this.SoldLastDayColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            this.SoldLastDayColumn.HeaderText = "Sold in Last Day";
+            this.SoldLastDayColumn.Name = "SoldLastDayColumn";
+            this.SoldLastDayColumn.ReadOnly = true;
+            this.SoldLastDayColumn.Width = 134;
             // 
             // MarketCapColumn
             // 
             this.MarketCapColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.MarketCapColumn.DataPropertyName = "MarketCap";
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
-            this.MarketCapColumn.DefaultCellStyle = dataGridViewCellStyle6;
-            this.MarketCapColumn.HeaderText = "MarketCap (10% Price * AddedLastDay)";
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black;
+            this.MarketCapColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            this.MarketCapColumn.HeaderText = "MarketCap (5% Price * SoldLastDay)";
             this.MarketCapColumn.Name = "MarketCapColumn";
             this.MarketCapColumn.ReadOnly = true;
-            this.MarketCapColumn.Width = 285;
+            this.MarketCapColumn.Width = 262;
             // 
             // SpacerColumn
             // 
             this.SpacerColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
-            this.SpacerColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black;
+            this.SpacerColumn.DefaultCellStyle = dataGridViewCellStyle9;
             this.SpacerColumn.HeaderText = "";
             this.SpacerColumn.Name = "SpacerColumn";
             this.SpacerColumn.ReadOnly = true;
-            // 
-            // progressBar
-            // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(3, 7);
-            this.progressBar.MarqueeAnimationSpeed = 20;
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(1013, 23);
-            this.progressBar.TabIndex = 1;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1019, 880);
+            this.ClientSize = new System.Drawing.Size(1095, 880);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.statsGrid);
             this.Name = "MainForm";
@@ -187,8 +217,10 @@
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn MinPriceColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TenPercentPriceColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn AddedLastDay;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OnePercentPriceColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TwoPercentPriceColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FivePercentPriceColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SoldLastDayColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn MarketCapColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn SpacerColumn;
     }
