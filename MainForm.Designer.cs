@@ -42,7 +42,7 @@
             this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MinPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TenPercentPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AddedLast6HoursColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AddedLastDay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MarketCapColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SpacerColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.statsGrid)).BeginInit();
@@ -70,7 +70,7 @@
             this.NameColumn,
             this.MinPriceColumn,
             this.TenPercentPriceColumn,
-            this.AddedLast6HoursColumn,
+            this.AddedLastDay,
             this.MarketCapColumn,
             this.SpacerColumn});
             this.statsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -127,17 +127,17 @@
             this.TenPercentPriceColumn.ReadOnly = true;
             this.TenPercentPriceColumn.Width = 147;
             // 
-            // AddedLast6HoursColumn
+            // AddedLastDay
             // 
-            this.AddedLast6HoursColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.AddedLast6HoursColumn.DataPropertyName = "AddedLast6Hours";
+            this.AddedLastDay.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.AddedLastDay.DataPropertyName = "AddedLastDay";
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
-            this.AddedLast6HoursColumn.DefaultCellStyle = dataGridViewCellStyle5;
-            this.AddedLast6HoursColumn.HeaderText = "Added in Last 6 Hours";
-            this.AddedLast6HoursColumn.Name = "AddedLast6HoursColumn";
-            this.AddedLast6HoursColumn.ReadOnly = true;
-            this.AddedLast6HoursColumn.Width = 172;
+            this.AddedLastDay.DefaultCellStyle = dataGridViewCellStyle5;
+            this.AddedLastDay.HeaderText = "Added in Last Day";
+            this.AddedLastDay.Name = "AddedLastDay";
+            this.AddedLastDay.ReadOnly = true;
+            this.AddedLastDay.Width = 147;
             // 
             // MarketCapColumn
             // 
@@ -146,10 +146,10 @@
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White;
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
             this.MarketCapColumn.DefaultCellStyle = dataGridViewCellStyle6;
-            this.MarketCapColumn.HeaderText = "MarketCap (10% Price * AddedLast6Hours)";
+            this.MarketCapColumn.HeaderText = "MarketCap (10% Price * AddedLastDay)";
             this.MarketCapColumn.Name = "MarketCapColumn";
             this.MarketCapColumn.ReadOnly = true;
-            this.MarketCapColumn.Width = 304;
+            this.MarketCapColumn.Width = 283;
             // 
             // SpacerColumn
             // 
@@ -186,7 +186,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn MinPriceColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn TenPercentPriceColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn AddedLast6HoursColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AddedLastDay;
         private System.Windows.Forms.DataGridViewTextBoxColumn MarketCapColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn SpacerColumn;
     }

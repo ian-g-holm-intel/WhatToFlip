@@ -40,7 +40,7 @@ namespace WhatToFlip
                                     select guiItem).Single();
                 if(existingItem != null)
                 {
-                    existingItem.AddedLast6Hours = item.AddedLast6Hours;
+                    existingItem.AddedLastDay = item.AddedLastDay;
                     existingItem.MinPrice = item.MinPrice;
                     existingItem.TenPercentPrice = item.TenPercentPrice;
                 }

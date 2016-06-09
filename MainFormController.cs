@@ -34,7 +34,7 @@ namespace WhatToFlip
                             Name = item.name,
                             MinPrice = Math.Round(item.minPrice.value, 3),
                             TenPercentPrice = Math.Round(item.avgPrice.values.TenPercent, 3),
-                            AddedLast6Hours = item.timeAdded.buckets.Last().doc_count
+                            AddedLastDay = item.timeAdded.buckets.Last().doc_count
                         };
                         guiInterface.UpdateItem(newItem);
                     }
@@ -59,7 +59,7 @@ namespace WhatToFlip
 
         public List<ItemStatsBucket> GetUniques()
         {
-            string jsonData = "{\"query\":{\"bool\":{\"must\":[{\"term\":{\"attributes.league\":{\"value\":\"Prophecy\"}}},{\"term\":{\"attributes.rarity\":{\"value\":\"Unique\"}}},{\"term\":{\"shop.hasPrice\":{\"value\":\"true\"}}}]}},\"aggs\":{\"uniqueNames\":{\"terms\":{\"field\":\"info.fullName\",\"size\":100,\"order\":{\"minPrice\":\"desc\"}},\"aggs\":{\"avgPrice\":{\"percentiles\":{\"field\":\"shop.chaosEquiv\",\"percents\":[1,10,20,30,50]}},\"minPrice\":{\"min\":{\"field\":\"shop.chaosEquiv\"}},\"timeAdded\":{\"date_histogram\":{\"field\":\"shop.added\",\"interval\":\"6h\",\r\n\t\t\t\t\t\t\"time_zone\": \"-08:00\"}}}}},\"size\":0}";
+            string jsonData = "{\"query\":{\"bool\":{\"must\":[{\"term\":{\"attributes.league\":{\"value\":\"Prophecy\"}}},{\"term\":{\"attributes.rarity\":{\"value\":\"Unique\"}}},{\"term\":{\"shop.hasPrice\":{\"value\":\"true\"}}}]}},\"aggs\":{\"uniqueNames\":{\"terms\":{\"field\":\"info.fullName\",\"size\":100,\"order\":{\"minPrice\":\"desc\"}},\"aggs\":{\"avgPrice\":{\"percentiles\":{\"field\":\"shop.chaosEquiv\",\"percents\":[1,10,20,30,50]}},\"minPrice\":{\"min\":{\"field\":\"shop.chaosEquiv\"}},\"timeAdded\":{\"date_histogram\":{\"field\":\"shop.added\",\"interval\":\"1d\",\r\n\t\t\t\t\t\t\"time_zone\": \"-08:00\"}}}}},\"size\":0}";
             using (var client = new WebClient())
             {
                 client.Headers[HttpRequestHeader.Authorization] = "DEVELOPMENT-Indexer";

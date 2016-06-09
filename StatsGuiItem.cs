@@ -9,8 +9,8 @@ namespace WhatToFlip
         public string Name { get; set; }
         public double MinPrice { get; set; }
         public double TenPercentPrice { get; set; }
-        public int AddedLast6Hours { get; set; }
-        public double Marketcap => Math.Round(AddedLast6Hours * TenPercentPrice, 3);
+        public int AddedLastDay { get; set; }
+        public double Marketcap => Math.Round(AddedLastDay * TenPercentPrice, 3);
 
         public bool Equals(StatsGuiItem other)
         {
