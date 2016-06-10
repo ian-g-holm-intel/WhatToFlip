@@ -26,6 +26,9 @@ namespace WhatToFlip
         public MainForm()
         {
             InitializeComponent();
+
+            leagueNamesBox.MouseWheel += (sender, args) => ((HandledMouseEventArgs)args).Handled = true;
+
             updateTimer.Enabled = true;
             statsGrid.AutoGenerateColumns = false;
             statsGuiItems = new SortableBindingList<StatsGuiItem>();
