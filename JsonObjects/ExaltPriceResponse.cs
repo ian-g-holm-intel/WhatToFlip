@@ -6,20 +6,6 @@ using System.Threading.Tasks;
 
 namespace WhatToFlip.JsonObjects
 {
-    public class ExaltPriceShards
-    {
-        public int total { get; set; }
-        public int successful { get; set; }
-        public int failed { get; set; }
-    }
-
-    public class ExaltPriceHits
-    {
-        public int total { get; set; }
-        public double max_score { get; set; }
-        public List<object> hits { get; set; }
-    }
-
     public class ExaltPriceBucket
     {
         public string key { get; set; }
@@ -43,8 +29,8 @@ namespace WhatToFlip.JsonObjects
     {
         public int took { get; set; }
         public bool timed_out { get; set; }
-        public ExaltPriceShards _shards { get; set; }
-        public ExaltPriceHits hits { get; set; }
+        public Shards _shards { get; set; }
+        public Hits hits { get; set; }
         public ExaltPriceAggregations aggregations { get; set; }
     }
 }

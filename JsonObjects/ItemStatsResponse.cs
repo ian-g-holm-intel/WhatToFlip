@@ -4,20 +4,6 @@ using Newtonsoft.Json;
 
 namespace WhatToFlip.JsonObjects
 {
-    public class ItemStatsShards
-    {
-        public int total { get; set; }
-        public int successful { get; set; }
-        public int failed { get; set; }
-    }
-
-    public class ItemStatsHits
-    {
-        public int total { get; set; }
-        public double max_score { get; set; }
-        public List<object> hits { get; set; }
-    }
-
     public class Values
     {
         [JsonProperty("1.0")]
@@ -106,8 +92,8 @@ namespace WhatToFlip.JsonObjects
     {
         public int took { get; set; }
         public bool timed_out { get; set; }
-        public ItemStatsShards _shards { get; set; }
-        public ItemStatsHits hits { get; set; }
+        public Shards _shards { get; set; }
+        public Hits hits { get; set; }
         public ItemStatsAggregations aggregations { get; set; }
     }
 }

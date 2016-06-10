@@ -71,8 +71,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="JsonObjects\CommonJsonObjects.cs" />
     <Compile Include="JsonObjects\ExaltPriceResponse.cs" />
     <Compile Include="JsonObjects\ItemStatsResponse.cs" />
+    <Compile Include="JsonObjects\LeagueNamesRequest.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

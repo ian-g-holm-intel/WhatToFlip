@@ -20,13 +20,23 @@ namespace WhatToFlip
             minPriceFinder = new MinPriceFinder();
         }
 
+        public void FetchLeagueNames()
+        {
+            guiInterface.InProgress = true;
+            ThreadPool.QueueUserWorkItem(parameters =>
+            {
+                guiInterface.SetLeagueNames(exileToolsClient.GetLeagueNames());
+            });
+        }
+
         public void Update(bool resort)
         {
             guiInterface.InProgress = true;
             ThreadPool.QueueUserWorkItem(parameters =>
             {
-                var uniques = exileToolsClient.GetItemStats();
-                var exaltedPrice = exileToolsClient.GetExaltPrice();
+                var uniques = exileToolsClient.GetItemStats(guiInterface.SelectedLeague);
+                var exaltedPrice = exileToolsClient.GetExaltPrice(guiInterface.SelectedLeague);
+                guiInterface.ExaltPrice = exaltedPrice;
                 guiInterface.InProgress = false;
                 guiInterface.InvokeGrid(() =>
                 {
@@ -35,7 +45,7 @@ namespace WhatToFlip
                         var newItem = new StatsGuiItem
                         {
                             Name = item.name,
-                            MinPrice = minPriceFinder.GetMinPrice(item.verified.buckets.yes, exaltedPrice),
+                            MinPrice = minPriceFinder.GetMinPrice(item.verified.buckets.yes, exaltedPrice == 0 ? 60 : exaltedPrice),
                             OnePercentPrice = Math.Round(item.avgPrice.values.OnePercent, 3),
                             TwoPercentPrice = Math.Round(item.avgPrice.values.TwoPercent, 3),
                             FivePercentPrice = Math.Round(item.avgPrice.values.FivePercent, 3),
@@ -72,30 +82,66 @@ namespace WhatToFlip
 
     public class ExileToolsClient
     {
-        public List<ItemStatsBucket> GetItemStats()
+        public List<ItemStatsBucket> GetItemStats(string leagueName)
         {
-            string jsonData = "{\r\n\t\"query\": {\r\n\t\t\"bool\": {\r\n\t\t\t\"must\": [{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"attributes.league\": {\r\n\t\t\t\t\t\t\"value\": \"Prophecy\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"shop.hasPrice\": {\r\n\t\t\t\t\t\t\"value\": \"true\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"range\": { \r\n\t\t\t\t\t\"shop.updated\":{\r\n\t\t\t\t\t\t\"gte\":\"now-1d\",\r\n\t\t\t\t\t\t\"lte\":\"now\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}],\r\n\t\t\t\"must_not\": [{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"attributes.rarity\": {\r\n\t\t\t\t\t\t\"value\": \"Magic\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"attributes.rarity\": {\r\n\t\t\t\t\t\t\"value\": \"Rare\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"attributes.rarity\": {\r\n\t\t\t\t\t\t\"value\": \"Currency\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"attributes.rarity\": {\r\n\t\t\t\t\t\t\"value\": \"Gem\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}]\r\n\t\t}\r\n\t},\r\n\t\"aggs\": {\r\n\t\t\"uniqueNames\": {\r\n\t\t\t\"terms\": {\r\n\t\t\t\t\"field\": \"info.fullName\",\r\n\t\t\t\t\"size\": 100,\r\n\t\t\t\t\"order\": {\r\n\t\t\t\t\t\"minPrice\": \"desc\"\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t\"aggs\": {\r\n\t\t\t\t\"minPrice\": {\r\n\t\t\t\t\t\"min\": {\r\n\t\t\t\t\t\t\"field\": \"shop.chaosEquiv\"\r\n\t\t\t\t\t}\r\n\t\t\t\t},\r\n\t\t\t\t\"avgPrice\": {\r\n\t\t\t\t\t\"percentiles\": {\r\n\t\t\t\t\t\t\"field\": \"shop.chaosEquiv\",\r\n\t\t\t\t\t\t\"percents\": [1,2,3,5,10]\r\n\t\t\t\t\t}\r\n\t\t\t\t},\r\n\t\t\t\t\"verified\" : {\r\n\t\t\t\t\t\"filters\" : {\r\n\t\t\t\t\t\t\"filters\" : {\r\n\t\t\t\t\t\t\t\"gone\" :   { \"term\" : { \"shop.verified\" : \"GONE\" }},\r\n\t\t\t\t\t\t\t\"yes\" : { \"term\" : { \"shop.verified\" : \"YES\" }}\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"aggs\": {\r\n\t\t\t\t\t\t\"minPriceExalted\": {\r\n\t\t\t\t\t\t\t\"min\": {\r\n\t\t\t\t\t\t\t\t\"field\": \"shop.price.Exalted Orb\"\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\"minPriceChaos\": {\r\n\t\t\t\t\t\t\t\"min\": {\r\n\t\t\t\t\t\t\t\t\"field\": \"shop.price.Chaos Orb\"\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t},\r\n\t\"size\": 0\r\n}";
-            using (var client = new WebClient())
+            try
             {
-                client.Headers[HttpRequestHeader.Authorization] = "DEVELOPMENT-Indexer";
-                client.Headers[HttpRequestHeader.ContentType] = "application/json";
-                var result = client.UploadString(@"http://api.exiletools.com/index/_search?pretty", "POST", jsonData);
-                var response = JsonConvert.DeserializeObject<ItemStatsResponse>(result);
-                return response.aggregations.uniqueNames.buckets;
+                string jsonData = "{\"query\": {\"bool\": {\"must\": [{\"term\": {\"attributes.league\": {\"value\": \"Prophecy\"}}},{\"term\": {\"shop.hasPrice\": {\"value\": \"true\"}}},{\"range\": { \"shop.updated\":{\"gte\":\"now-1d\",\"lte\":\"now\"}}},{\"range\": { \"shop.chaosEquiv\":{\"lte\":5000}}}],\"must_not\": [{\"term\": {\"attributes.rarity\": {\"value\": \"Magic\"}}},{\"term\": {\"attributes.rarity\": {\"value\": \"Rare\"}}},{\"term\": {\"attributes.rarity\": {\"value\": \"Currency\"}}},{\"term\": {\"attributes.rarity\": {\"value\": \"Gem\"}}}]}},\"aggs\": {\"uniqueNames\": {\"terms\": {\"field\": \"info.fullName\",\"size\": 100,\"order\": {\"minPrice\": \"desc\"}},\"aggs\": {\"minPrice\": {\"min\": {\"field\": \"shop.chaosEquiv\"}},\"avgPrice\": {\"percentiles\": {\"field\": \"shop.chaosEquiv\",\"percents\": [1,2,3,5,10]}},\"verified\" : {\"filters\" : {\"filters\" : {\"gone\" :   { \"term\" : { \"shop.verified\" : \"GONE\" }},\"yes\" : { \"term\" : { \"shop.verified\" : \"YES\" }}}},\"aggs\": {\"minPriceExalted\": {\"min\": {\"field\": \"shop.price.Exalted Orb\"}},\"minPriceChaos\": {\"min\": {\"field\": \"shop.price.Chaos Orb\"}}}}}}},\"size\": 0}";
+                using (var client = new WebClient())
+                {
+                    client.Headers[HttpRequestHeader.Authorization] = "DEVELOPMENT-Indexer";
+                    client.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    var result = client.UploadString(@"http://api.exiletools.com/index/_search?pretty", "POST", jsonData);
+                    var response = JsonConvert.DeserializeObject<ItemStatsResponse>(result);
+                    return response.aggregations.uniqueNames.buckets;
+                }
+            }
+
+            catch
+            {
+                return new List<ItemStatsBucket>();
             }
         }
 
-        public double GetExaltPrice()
+        public double GetExaltPrice(string leagueName)
         {
-            string jsonData = "{\r\n\t\"query\": {\r\n\t\t\"bool\": {\r\n\t\t\t\"must\": [{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"attributes.league\": {\r\n\t\t\t\t\t\t\"value\": \"Prophecy\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"shop.hasPrice\": {\r\n\t\t\t\t\t\t\"value\": \"true\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"shop.currency\": {\r\n\t\t\t\t\t\t\"value\": \"Chaos Orb\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"range\": {\r\n\t\t\t\t\t\"shop.amount\":{\r\n\t\t\t\t\t\t\"gte\":40\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"shop.verified\": {\r\n\t\t\t\t\t\t\"value\": \"YES\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"range\": { \r\n\t\t\t\t\t\"shop.updated\":{\r\n\t\t\t\t\t\t\"gte\":\"now-1h\",\r\n\t\t\t\t\t\t\"lte\":\"now\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"attributes.rarity\": {\r\n\t\t\t\t\t\t\"value\": \"Currency\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}]\r\n\t\t}\r\n\t},\r\n\t\"aggs\": {\r\n\t\t\"uniqueNames\": {\r\n\t\t\t\"terms\": {\r\n\t\t\t\t\"field\": \"info.fullName\",\r\n\t\t\t\t\"include\": \"Exalted Orb\"\r\n\t\t\t},\r\n\t\t\t\"aggs\": {\r\n\t\t\t\t\"minPrice\": {\r\n\t\t\t\t\t\"min\": {\r\n\t\t\t\t\t\t\"field\": \"shop.amount\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t},\r\n\t\"size\": 0\r\n}";
-            using (var client = new WebClient())
+            try
             {
-                client.Headers[HttpRequestHeader.Authorization] = "DEVELOPMENT-Indexer";
-                client.Headers[HttpRequestHeader.ContentType] = "application/json";
-                var result = client.UploadString(@"http://api.exiletools.com/index/_search?pretty", "POST", jsonData);
-                var response = JsonConvert.DeserializeObject<ExaltPriceResponse>(result);
-                var exaltPriceBucket = response.aggregations.uniqueNames.buckets.SingleOrDefault(bucket => bucket.key == "Exalted Orb");
-                return exaltPriceBucket?.minPrice.value ?? 60;
+                string jsonData = "{\"query\": {\"bool\": {\"must\": [{\"term\": {\"attributes.league\": {\"value\": \"" + leagueName + "\"}}},{\"term\": {\"shop.hasPrice\": {\"value\": \"true\"}}},{\"term\": {\"shop.currency\": {\"value\": \"Chaos Orb\"}}},{\"range\": {\"shop.amount\":{\"gte\":40}}},{\"term\": {\"shop.verified\": {\"value\": \"YES\"}}},{\"range\": { \"shop.updated\":{\"gte\":\"now-1h\",\"lte\":\"now\"}}},{\"term\": {\"attributes.rarity\": {\"value\": \"Currency\"}}}]}},\"aggs\": {\"uniqueNames\": {\"terms\": {\"field\": \"info.fullName\",\"include\": \"Exalted Orb\"},\"aggs\": {\"minPrice\": {\"min\": {\"field\": \"shop.amount\"}}}}},\"size\": 0}";
+                using (var client = new WebClient())
+                {
+                    client.Headers[HttpRequestHeader.Authorization] = "DEVELOPMENT-Indexer";
+                    client.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    var result = client.UploadString(@"http://api.exiletools.com/index/_search?pretty", "POST", jsonData);
+                    var response = JsonConvert.DeserializeObject<ExaltPriceResponse>(result);
+                    var exaltPriceBucket =
+                        response.aggregations.uniqueNames.buckets.SingleOrDefault(bucket => bucket.key == "Exalted Orb");
+                    return exaltPriceBucket?.minPrice.value ?? 0;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public string[] GetLeagueNames()
+        {
+            try
+            {
+                string jsonData = "{\"query\":{\"match_all\":{}},\"aggs\":{\"uniqueNames\":{\"terms\":{\"field\":\"attributes.league\",\"exclude\":\"false\"}}},\"size\":0}";
+                using (var client = new WebClient())
+                {
+                    client.Headers[HttpRequestHeader.Authorization] = "DEVELOPMENT-Indexer";
+                    client.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    var result = client.UploadString(@"http://api.exiletools.com/index/_search?pretty", "POST", jsonData);
+                    var response = JsonConvert.DeserializeObject<LeagueNamesRequest>(result);
+                    return (from Bucket bucket in response.aggregations.uniqueNames.buckets select bucket.key).ToArray();
+                }
+            }
+            catch
+            {
+                return new string[0];
             }
         }
     }
