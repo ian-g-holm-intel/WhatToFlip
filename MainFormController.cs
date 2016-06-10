@@ -20,7 +20,7 @@ namespace WhatToFlip
             minPriceFinder = new MinPriceFinder();
         }
 
-        public void Update()
+        public void Update(bool resort)
         {
             guiInterface.InProgress = true;
             ThreadPool.QueueUserWorkItem(parameters =>
@@ -41,11 +41,10 @@ namespace WhatToFlip
                             FivePercentPrice = Math.Round(item.avgPrice.values.FivePercent, 3),
                             SoldLastDay = item.verified.buckets.gone.count
                         };
-
-
                         guiInterface.UpdateItem(newItem);
                     }
-                    guiInterface.SortByMarketValue();
+                    if(resort)
+                        guiInterface.SortByMarketValue();
                 });
             });
         }
@@ -88,7 +87,7 @@ namespace WhatToFlip
 
         public double GetExaltPrice()
         {
-            string jsonData = "{\r\n\t\"query\": {\r\n\t\t\"bool\": {\r\n\t\t\t\"must\": [{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"attributes.league\": {\r\n\t\t\t\t\t\t\"value\": \"Prophecy\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"shop.hasPrice\": {\r\n\t\t\t\t\t\t\"value\": \"true\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"shop.currency\": {\r\n\t\t\t\t\t\t\"value\": \"Chaos Orb\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"shop.verified\": {\r\n\t\t\t\t\t\t\"value\": \"YES\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"range\": { \r\n\t\t\t\t\t\"shop.updated\":{\r\n\t\t\t\t\t\t\"gte\":\"now-1h\",\r\n\t\t\t\t\t\t\"lte\":\"now\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"attributes.rarity\": {\r\n\t\t\t\t\t\t\"value\": \"Currency\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}]\r\n\t\t}\r\n\t},\r\n\t\"aggs\": {\r\n\t\t\"uniqueNames\": {\r\n\t\t\t\"terms\": {\r\n\t\t\t\t\"field\": \"info.fullName\",\r\n\t\t\t\t\"include\": \"Exalted Orb\"\r\n\t\t\t},\r\n\t\t\t\"aggs\": {\r\n\t\t\t\t\"minPrice\": {\r\n\t\t\t\t\t\"min\": {\r\n\t\t\t\t\t\t\"field\": \"shop.amount\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t},\r\n\t\"size\": 0\r\n}";
+            string jsonData = "{\r\n\t\"query\": {\r\n\t\t\"bool\": {\r\n\t\t\t\"must\": [{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"attributes.league\": {\r\n\t\t\t\t\t\t\"value\": \"Prophecy\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"shop.hasPrice\": {\r\n\t\t\t\t\t\t\"value\": \"true\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"shop.currency\": {\r\n\t\t\t\t\t\t\"value\": \"Chaos Orb\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"range\": {\r\n\t\t\t\t\t\"shop.amount\":{\r\n\t\t\t\t\t\t\"gte\":40\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"shop.verified\": {\r\n\t\t\t\t\t\t\"value\": \"YES\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"range\": { \r\n\t\t\t\t\t\"shop.updated\":{\r\n\t\t\t\t\t\t\"gte\":\"now-1h\",\r\n\t\t\t\t\t\t\"lte\":\"now\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"term\": {\r\n\t\t\t\t\t\"attributes.rarity\": {\r\n\t\t\t\t\t\t\"value\": \"Currency\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}]\r\n\t\t}\r\n\t},\r\n\t\"aggs\": {\r\n\t\t\"uniqueNames\": {\r\n\t\t\t\"terms\": {\r\n\t\t\t\t\"field\": \"info.fullName\",\r\n\t\t\t\t\"include\": \"Exalted Orb\"\r\n\t\t\t},\r\n\t\t\t\"aggs\": {\r\n\t\t\t\t\"minPrice\": {\r\n\t\t\t\t\t\"min\": {\r\n\t\t\t\t\t\t\"field\": \"shop.amount\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t},\r\n\t\"size\": 0\r\n}";
             using (var client = new WebClient())
             {
                 client.Headers[HttpRequestHeader.Authorization] = "DEVELOPMENT-Indexer";
@@ -96,7 +95,7 @@ namespace WhatToFlip
                 var result = client.UploadString(@"http://api.exiletools.com/index/_search?pretty", "POST", jsonData);
                 var response = JsonConvert.DeserializeObject<ExaltPriceResponse>(result);
                 var exaltPriceBucket = response.aggregations.uniqueNames.buckets.SingleOrDefault(bucket => bucket.key == "Exalted Orb");
-                return exaltPriceBucket?.minPrice.value ?? 0;
+                return exaltPriceBucket?.minPrice.value ?? 60;
             }
         }
     }

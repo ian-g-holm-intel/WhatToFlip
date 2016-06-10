@@ -84,7 +84,7 @@ namespace WhatToFlip
         {
             ErrorHandler(() =>
             {
-                controller.Update();
+                controller.Update(true);
                 updateTimer.Enabled = true;
             });
         }
@@ -94,7 +94,7 @@ namespace WhatToFlip
             ErrorHandler(() =>
             {
                 updateTimer.Enabled = false;
-                controller.Update();
+                controller.Update(false);
                 updateTimer.Enabled = true;
             });
         }
