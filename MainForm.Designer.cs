@@ -29,30 +29,31 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.statsGrid = new System.Windows.Forms.DataGridView();
-            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MinPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OnePercentPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TwoPercentPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FivePercentPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SoldLastDayColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarketCapColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SpacerColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.exaltPriceLabel = new System.Windows.Forms.Label();
             this.exaltPrice = new System.Windows.Forms.TextBox();
             this.leagueNamesBox = new System.Windows.Forms.ComboBox();
             this.leagueLabel = new System.Windows.Forms.Label();
+            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CurrentLowestColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Low24hrColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OneDayAgoAvgColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TwoDayAgoAvgColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ThreeDayAgoAvgColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SoldLast24hColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarketCapColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NoteColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.statsGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,130 +68,37 @@
             this.statsGrid.AllowUserToDeleteRows = false;
             this.statsGrid.AllowUserToResizeColumns = false;
             this.statsGrid.AllowUserToResizeRows = false;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.statsGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.statsGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.statsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.statsGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NameColumn,
-            this.MinPriceColumn,
-            this.OnePercentPriceColumn,
-            this.TwoPercentPriceColumn,
-            this.FivePercentPriceColumn,
-            this.SoldLastDayColumn,
+            this.CurrentLowestColumn,
+            this.Low24hrColumn,
+            this.OneDayAgoAvgColumn,
+            this.TwoDayAgoAvgColumn,
+            this.ThreeDayAgoAvgColumn,
+            this.SoldLast24hColumn,
             this.MarketCapColumn,
-            this.SpacerColumn});
+            this.NoteColumn});
             this.statsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.statsGrid.Location = new System.Drawing.Point(0, 40);
+            this.statsGrid.MultiSelect = false;
             this.statsGrid.Name = "statsGrid";
-            this.statsGrid.ReadOnly = true;
             this.statsGrid.RowHeadersVisible = false;
+            this.statsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.statsGrid.Size = new System.Drawing.Size(1095, 840);
             this.statsGrid.TabIndex = 0;
-            // 
-            // NameColumn
-            // 
-            this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.NameColumn.DataPropertyName = "Name";
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black;
-            this.NameColumn.DefaultCellStyle = dataGridViewCellStyle11;
-            this.NameColumn.HeaderText = "Name";
-            this.NameColumn.Name = "NameColumn";
-            this.NameColumn.ReadOnly = true;
-            this.NameColumn.Width = 70;
-            // 
-            // MinPriceColumn
-            // 
-            this.MinPriceColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.MinPriceColumn.DataPropertyName = "MinPrice";
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black;
-            this.MinPriceColumn.DefaultCellStyle = dataGridViewCellStyle12;
-            this.MinPriceColumn.HeaderText = "MinPrice (chaos)";
-            this.MinPriceColumn.Name = "MinPriceColumn";
-            this.MinPriceColumn.ReadOnly = true;
-            this.MinPriceColumn.Width = 139;
-            // 
-            // OnePercentPriceColumn
-            // 
-            this.OnePercentPriceColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.OnePercentPriceColumn.DataPropertyName = "OnePercentPrice";
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black;
-            this.OnePercentPriceColumn.DefaultCellStyle = dataGridViewCellStyle13;
-            this.OnePercentPriceColumn.HeaderText = "1% Price";
-            this.OnePercentPriceColumn.Name = "OnePercentPriceColumn";
-            this.OnePercentPriceColumn.ReadOnly = true;
-            this.OnePercentPriceColumn.Width = 89;
-            // 
-            // TwoPercentPriceColumn
-            // 
-            this.TwoPercentPriceColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.TwoPercentPriceColumn.DataPropertyName = "TwoPercentPrice";
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Black;
-            this.TwoPercentPriceColumn.DefaultCellStyle = dataGridViewCellStyle14;
-            this.TwoPercentPriceColumn.HeaderText = "2% Price";
-            this.TwoPercentPriceColumn.Name = "TwoPercentPriceColumn";
-            this.TwoPercentPriceColumn.ReadOnly = true;
-            this.TwoPercentPriceColumn.Width = 89;
-            // 
-            // FivePercentPriceColumn
-            // 
-            this.FivePercentPriceColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.FivePercentPriceColumn.DataPropertyName = "FivePercentPrice";
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black;
-            this.FivePercentPriceColumn.DefaultCellStyle = dataGridViewCellStyle15;
-            this.FivePercentPriceColumn.HeaderText = "5% Price";
-            this.FivePercentPriceColumn.Name = "FivePercentPriceColumn";
-            this.FivePercentPriceColumn.ReadOnly = true;
-            this.FivePercentPriceColumn.Width = 89;
-            // 
-            // SoldLastDayColumn
-            // 
-            this.SoldLastDayColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.SoldLastDayColumn.DataPropertyName = "SoldLastDay";
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.Black;
-            this.SoldLastDayColumn.DefaultCellStyle = dataGridViewCellStyle16;
-            this.SoldLastDayColumn.HeaderText = "Sold in Last Day";
-            this.SoldLastDayColumn.Name = "SoldLastDayColumn";
-            this.SoldLastDayColumn.ReadOnly = true;
-            this.SoldLastDayColumn.Width = 136;
-            // 
-            // MarketCapColumn
-            // 
-            this.MarketCapColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.MarketCapColumn.DataPropertyName = "MarketCap";
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.Black;
-            this.MarketCapColumn.DefaultCellStyle = dataGridViewCellStyle17;
-            this.MarketCapColumn.HeaderText = "MarketCap (5% Price * SoldLastDay)";
-            this.MarketCapColumn.Name = "MarketCapColumn";
-            this.MarketCapColumn.ReadOnly = true;
-            this.MarketCapColumn.Width = 264;
-            // 
-            // SpacerColumn
-            // 
-            this.SpacerColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.Black;
-            this.SpacerColumn.DefaultCellStyle = dataGridViewCellStyle18;
-            this.SpacerColumn.HeaderText = "";
-            this.SpacerColumn.Name = "SpacerColumn";
-            this.SpacerColumn.ReadOnly = true;
+            this.statsGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.statsGrid_CellValueChanged);
             // 
             // progressBar
             // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar.Location = new System.Drawing.Point(12, 9);
             this.progressBar.MarqueeAnimationSpeed = 20;
             this.progressBar.Name = "progressBar";
@@ -240,6 +148,109 @@
             this.leagueLabel.TabIndex = 5;
             this.leagueLabel.Text = "League";
             // 
+            // NameColumn
+            // 
+            this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.NameColumn.DataPropertyName = "Name";
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            this.NameColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.NameColumn.HeaderText = "Name";
+            this.NameColumn.Name = "NameColumn";
+            this.NameColumn.ReadOnly = true;
+            this.NameColumn.Width = 70;
+            // 
+            // CurrentLowestColumn
+            // 
+            this.CurrentLowestColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.CurrentLowestColumn.DataPropertyName = "CurrentLow";
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            this.CurrentLowestColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.CurrentLowestColumn.HeaderText = "Current Low";
+            this.CurrentLowestColumn.Name = "CurrentLowestColumn";
+            this.CurrentLowestColumn.ReadOnly = true;
+            this.CurrentLowestColumn.Width = 109;
+            // 
+            // Low24hrColumn
+            // 
+            this.Low24hrColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Low24hrColumn.DataPropertyName = "Low24h";
+            this.Low24hrColumn.HeaderText = "24hr Low";
+            this.Low24hrColumn.Name = "Low24hrColumn";
+            this.Low24hrColumn.ReadOnly = true;
+            this.Low24hrColumn.Width = 91;
+            // 
+            // OneDayAgoAvgColumn
+            // 
+            this.OneDayAgoAvgColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.OneDayAgoAvgColumn.DataPropertyName = "OneDayAgoAvgString";
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            this.OneDayAgoAvgColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.OneDayAgoAvgColumn.HeaderText = "Avg 1d Ago";
+            this.OneDayAgoAvgColumn.Name = "OneDayAgoAvgColumn";
+            this.OneDayAgoAvgColumn.ReadOnly = true;
+            this.OneDayAgoAvgColumn.Width = 106;
+            // 
+            // TwoDayAgoAvgColumn
+            // 
+            this.TwoDayAgoAvgColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.TwoDayAgoAvgColumn.DataPropertyName = "TwoDayAgoAvgString";
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
+            this.TwoDayAgoAvgColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            this.TwoDayAgoAvgColumn.HeaderText = "Avg 2d Ago";
+            this.TwoDayAgoAvgColumn.Name = "TwoDayAgoAvgColumn";
+            this.TwoDayAgoAvgColumn.ReadOnly = true;
+            this.TwoDayAgoAvgColumn.Width = 106;
+            // 
+            // ThreeDayAgoAvgColumn
+            // 
+            this.ThreeDayAgoAvgColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.ThreeDayAgoAvgColumn.DataPropertyName = "ThreeDayAgoAvgString";
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            this.ThreeDayAgoAvgColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.ThreeDayAgoAvgColumn.HeaderText = "Avg 3d Ago";
+            this.ThreeDayAgoAvgColumn.Name = "ThreeDayAgoAvgColumn";
+            this.ThreeDayAgoAvgColumn.ReadOnly = true;
+            this.ThreeDayAgoAvgColumn.Width = 106;
+            // 
+            // SoldLast24hColumn
+            // 
+            this.SoldLast24hColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.SoldLast24hColumn.DataPropertyName = "SoldLast24h";
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
+            this.SoldLast24hColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            this.SoldLast24hColumn.HeaderText = "Sold last 24h";
+            this.SoldLast24hColumn.Name = "SoldLast24hColumn";
+            this.SoldLast24hColumn.ReadOnly = true;
+            this.SoldLast24hColumn.Width = 115;
+            // 
+            // MarketCapColumn
+            // 
+            this.MarketCapColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.MarketCapColumn.DataPropertyName = "MarketCap";
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black;
+            this.MarketCapColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            this.MarketCapColumn.HeaderText = "MarketCap";
+            this.MarketCapColumn.Name = "MarketCapColumn";
+            this.MarketCapColumn.ReadOnly = true;
+            this.MarketCapColumn.Width = 101;
+            // 
+            // NoteColumn
+            // 
+            this.NoteColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.NoteColumn.DataPropertyName = "Note";
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black;
+            this.NoteColumn.DefaultCellStyle = dataGridViewCellStyle9;
+            this.NoteColumn.HeaderText = "Note";
+            this.NoteColumn.Name = "NoteColumn";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -267,18 +278,19 @@
         private System.Windows.Forms.Timer updateTimer;
         private System.Windows.Forms.DataGridView statsGrid;
         private System.Windows.Forms.ProgressBar progressBar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MinPriceColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OnePercentPriceColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TwoPercentPriceColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FivePercentPriceColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SoldLastDayColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MarketCapColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SpacerColumn;
         private System.Windows.Forms.Label exaltPriceLabel;
         private System.Windows.Forms.TextBox exaltPrice;
         private System.Windows.Forms.ComboBox leagueNamesBox;
         private System.Windows.Forms.Label leagueLabel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CurrentLowestColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Low24hrColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OneDayAgoAvgColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TwoDayAgoAvgColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ThreeDayAgoAvgColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SoldLast24hColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarketCapColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NoteColumn;
     }
 }
 

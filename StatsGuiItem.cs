@@ -1,18 +1,137 @@
 ﻿using System;
-using PostSharp.Patterns.Model;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using WhatToFlip.Annotations;
 
 namespace WhatToFlip
 {
-    [NotifyPropertyChanged]
-    public class StatsGuiItem : IEquatable<StatsGuiItem>
+    public class StatsGuiItem : IEquatable<StatsGuiItem>, INotifyPropertyChanged
     {
-        public string Name { get; set; }
-        public double MinPrice { get; set; }
-        public double OnePercentPrice { get; set; }
-        public double TwoPercentPrice { get; set; }
-        public double FivePercentPrice { get; set; }
-        public int SoldLastDay { get; set; }
-        public double Marketcap => Math.Round(SoldLastDay * FivePercentPrice, 3);
+        private string name;
+
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double currentLow;
+
+        public double CurrentLow
+        {
+            get
+            {
+                return currentLow;
+            }
+            set
+            {
+                currentLow = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private double low24h;
+
+        public double Low24h
+        {
+            get
+            {
+                return low24h;
+            }
+            set
+            {
+                low24h = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int soldLast24h;
+
+        public int SoldLast24h
+        {
+            get
+            {
+                return soldLast24h;
+            }
+            set
+            {
+                soldLast24h = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Marketcap));
+            }
+        }
+
+        public double Marketcap => Math.Round(SoldLast24h * OneDayAgoAvg, 3);
+
+        private double oneDayAgoAvg;
+        public double OneDayAgoAvg
+        {
+            get
+            {
+                return oneDayAgoAvg;
+            }
+            set
+            {
+                oneDayAgoAvg = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Marketcap));
+                OnPropertyChanged(nameof(OneDayAgoAvgString));
+            }
+        }
+        
+        public string OneDayAgoAvgString => double.IsNaN(OneDayAgoAvg) ? "No Data" : OneDayAgoAvg.ToString();
+
+        private double twoDayAgoAvg;
+
+        public double TwoDayAgoAvg
+        {
+            get
+            {
+                return twoDayAgoAvg;
+            }
+            set
+            {
+                twoDayAgoAvg = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(TwoDayAgoAvgString));
+            }
+        }
+
+        public string TwoDayAgoAvgString => double.IsNaN(TwoDayAgoAvg) ? "No Data" : TwoDayAgoAvg.ToString();
+
+        private double threeDayAgoAvg;
+
+        public double ThreeDayAgoAvg
+        {
+            get
+            {
+                return threeDayAgoAvg;
+            }
+            set
+            {
+                threeDayAgoAvg = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ThreeDayAgoAvgString));
+            }
+        }
+
+        public string ThreeDayAgoAvgString => double.IsNaN(ThreeDayAgoAvg) ? "No Data" : ThreeDayAgoAvg.ToString();
+
+        private string note;
+
+        public string Note
+        {
+            get { return note; }
+            set
+            {
+                note = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool Equals(StatsGuiItem other)
         {
@@ -34,6 +153,14 @@ namespace WhatToFlip
         public override int GetHashCode()
         {
             return Name.GetHashCode();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

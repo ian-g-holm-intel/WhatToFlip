@@ -2,25 +2,25 @@
 
 namespace WhatToFlip.JsonObjects
 {
-    public class Bucket
+    public class LeagueNamesBucket
     {
         public string key { get; set; }
         public int doc_count { get; set; }
     }
 
-    public class UniqueNames
+    public class LeagueNamesUniqueNames
     {
         public int doc_count_error_upper_bound { get; set; }
         public int sum_other_doc_count { get; set; }
-        public List<Bucket> buckets { get; set; }
+        public List<LeagueNamesBucket> buckets { get; set; }
     }
 
     public class LeagueNamesAggregations
     {
-        public UniqueNames uniqueNames { get; set; }
+        public LeagueNamesUniqueNames uniqueNames { get; set; }
     }
 
-    public class LeagueNamesRequest
+    public class LeagueNamesResponse
     {
         public int took { get; set; }
         public bool timed_out { get; set; }

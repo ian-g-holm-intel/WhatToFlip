@@ -16,6 +16,7 @@ namespace WhatToFlip
         double ExaltPrice { get; set; }
         void SetLeagueNames(string[] leagueNames);
         string SelectedLeague { get; }
+        void ClearGridSelection();
     }
 
     public partial class MainForm : Form, IMainForm
@@ -38,6 +39,11 @@ namespace WhatToFlip
             controller = new MainFormController(this);
         }
 
+        public void ClearGridSelection()
+        {
+            statsGrid.ClearSelection();
+        }
+
         public void SortByMarketValue()
         {
             statsGrid.InvokeIfRequired(() =>
@@ -53,7 +59,8 @@ namespace WhatToFlip
                 leagueNamesList.Clear();
                 foreach (string league in leagueNames)
                     leagueNamesList.Add(league);
-                leagueNamesBox.SelectedIndex = 1;
+                if(leagueNamesList.Count > 1)
+                    leagueNamesBox.SelectedIndex = 1;
             });
         }
 
@@ -84,11 +91,11 @@ namespace WhatToFlip
                                     select guiItem).Single();
                 if(existingItem != null)
                 {
-                    existingItem.SoldLastDay = item.SoldLastDay;
-                    existingItem.MinPrice = item.MinPrice;
-                    existingItem.OnePercentPrice = item.OnePercentPrice;
-                    existingItem.TwoPercentPrice = item.TwoPercentPrice;
-                    existingItem.FivePercentPrice = item.FivePercentPrice;
+                    existingItem.SoldLast24h = item.SoldLast24h;
+                    existingItem.CurrentLow = item.CurrentLow;
+                    existingItem.OneDayAgoAvg = item.OneDayAgoAvg;
+                    existingItem.TwoDayAgoAvg = item.TwoDayAgoAvg;
+                    existingItem.ThreeDayAgoAvg = item.ThreeDayAgoAvg;
                 }
             }
             else
@@ -139,10 +146,7 @@ namespace WhatToFlip
             {
                 progressBar.InvokeIfRequired(() =>
                 {
-                    if(value)
-                        progressBar.Style = ProgressBarStyle.Marquee;
-                    else
-                        progressBar.Style = ProgressBarStyle.Blocks;
+                    progressBar.Style = value ? ProgressBarStyle.Marquee : ProgressBarStyle.Blocks;
                 });
             }
         }
@@ -161,6 +165,16 @@ namespace WhatToFlip
             ErrorHandler(() =>
             {
                 controller.FetchLeagueNames();
+            });
+        }
+
+        private void statsGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            ErrorHandler(() =>
+            {
+                if (e.RowIndex < 0) return;
+                var item = statsGuiItems[e.RowIndex];
+                controller.CellValueChanged(item.Name, item.Note);
             });
         }
     }
