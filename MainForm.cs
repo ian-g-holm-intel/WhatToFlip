@@ -59,8 +59,11 @@ namespace WhatToFlip
                 leagueNamesList.Clear();
                 foreach (string league in leagueNames)
                     leagueNamesList.Add(league);
-                if(leagueNamesList.Count > 1)
-                    leagueNamesBox.SelectedIndex = 1;
+                if (leagueNamesList.Count > 0)
+                {
+                    leagueNamesBox.SelectedIndex = -1;
+                    leagueNamesBox.SelectedIndex = 0;
+                }
             });
         }
 
@@ -155,6 +158,7 @@ namespace WhatToFlip
         {
             ErrorHandler(() =>
             {
+                if (leagueNamesBox.SelectedIndex == -1) return;
                 statsGuiItems.Clear();
                 controller.Update(true);
             });
@@ -175,6 +179,18 @@ namespace WhatToFlip
                 if (e.RowIndex < 0) return;
                 var item = statsGuiItems[e.RowIndex];
                 controller.CellValueChanged(item.Name, item.Note);
+            });
+        }
+
+        private void statsGrid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            ErrorHandler(() =>
+            {
+                if (e.RowIndex < 0) return;
+                if (e.Value is double && double.IsNaN((double)e.Value))
+                {
+                    e.Value = "No Data";
+                }
             });
         }
     }

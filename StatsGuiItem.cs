@@ -79,11 +79,8 @@ namespace WhatToFlip
                 oneDayAgoAvg = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(Marketcap));
-                OnPropertyChanged(nameof(OneDayAgoAvgString));
             }
         }
-        
-        public string OneDayAgoAvgString => double.IsNaN(OneDayAgoAvg) ? "No Data" : OneDayAgoAvg.ToString();
 
         private double twoDayAgoAvg;
 
@@ -97,11 +94,8 @@ namespace WhatToFlip
             {
                 twoDayAgoAvg = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(TwoDayAgoAvgString));
             }
         }
-
-        public string TwoDayAgoAvgString => double.IsNaN(TwoDayAgoAvg) ? "No Data" : TwoDayAgoAvg.ToString();
 
         private double threeDayAgoAvg;
 
@@ -115,11 +109,8 @@ namespace WhatToFlip
             {
                 threeDayAgoAvg = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(ThreeDayAgoAvgString));
             }
         }
-
-        public string ThreeDayAgoAvgString => double.IsNaN(ThreeDayAgoAvg) ? "No Data" : ThreeDayAgoAvg.ToString();
 
         private string note;
 

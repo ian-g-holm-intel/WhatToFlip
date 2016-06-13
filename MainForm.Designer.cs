@@ -40,11 +40,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.statsGrid = new System.Windows.Forms.DataGridView();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.exaltPriceLabel = new System.Windows.Forms.Label();
-            this.exaltPrice = new System.Windows.Forms.TextBox();
-            this.leagueNamesBox = new System.Windows.Forms.ComboBox();
-            this.leagueLabel = new System.Windows.Forms.Label();
             this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CurrentLowestColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Low24hrColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,6 +49,11 @@
             this.SoldLast24hColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MarketCapColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NoteColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.exaltPriceLabel = new System.Windows.Forms.Label();
+            this.exaltPrice = new System.Windows.Forms.TextBox();
+            this.leagueNamesBox = new System.Windows.Forms.ComboBox();
+            this.leagueLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.statsGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,7 +95,111 @@
             this.statsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.statsGrid.Size = new System.Drawing.Size(1095, 840);
             this.statsGrid.TabIndex = 0;
+            this.statsGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.statsGrid_CellFormatting);
             this.statsGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.statsGrid_CellValueChanged);
+            // 
+            // NameColumn
+            // 
+            this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.NameColumn.DataPropertyName = "Name";
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            this.NameColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.NameColumn.HeaderText = "Name";
+            this.NameColumn.Name = "NameColumn";
+            this.NameColumn.ReadOnly = true;
+            this.NameColumn.Width = 70;
+            // 
+            // CurrentLowestColumn
+            // 
+            this.CurrentLowestColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.CurrentLowestColumn.DataPropertyName = "CurrentLow";
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            this.CurrentLowestColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.CurrentLowestColumn.HeaderText = "Current Low";
+            this.CurrentLowestColumn.Name = "CurrentLowestColumn";
+            this.CurrentLowestColumn.ReadOnly = true;
+            this.CurrentLowestColumn.Width = 109;
+            // 
+            // Low24hrColumn
+            // 
+            this.Low24hrColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Low24hrColumn.DataPropertyName = "Low24h";
+            this.Low24hrColumn.HeaderText = "24hr Low";
+            this.Low24hrColumn.Name = "Low24hrColumn";
+            this.Low24hrColumn.ReadOnly = true;
+            this.Low24hrColumn.Width = 91;
+            // 
+            // OneDayAgoAvgColumn
+            // 
+            this.OneDayAgoAvgColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.OneDayAgoAvgColumn.DataPropertyName = "OneDayAgoAvg";
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            this.OneDayAgoAvgColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.OneDayAgoAvgColumn.HeaderText = "Avg 1d Ago";
+            this.OneDayAgoAvgColumn.Name = "OneDayAgoAvgColumn";
+            this.OneDayAgoAvgColumn.ReadOnly = true;
+            this.OneDayAgoAvgColumn.Width = 106;
+            // 
+            // TwoDayAgoAvgColumn
+            // 
+            this.TwoDayAgoAvgColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.TwoDayAgoAvgColumn.DataPropertyName = "TwoDayAgoAvg";
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
+            this.TwoDayAgoAvgColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            this.TwoDayAgoAvgColumn.HeaderText = "Avg 2d Ago";
+            this.TwoDayAgoAvgColumn.Name = "TwoDayAgoAvgColumn";
+            this.TwoDayAgoAvgColumn.ReadOnly = true;
+            this.TwoDayAgoAvgColumn.Width = 106;
+            // 
+            // ThreeDayAgoAvgColumn
+            // 
+            this.ThreeDayAgoAvgColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.ThreeDayAgoAvgColumn.DataPropertyName = "ThreeDayAgoAvg";
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            this.ThreeDayAgoAvgColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.ThreeDayAgoAvgColumn.HeaderText = "Avg 3d Ago";
+            this.ThreeDayAgoAvgColumn.Name = "ThreeDayAgoAvgColumn";
+            this.ThreeDayAgoAvgColumn.ReadOnly = true;
+            this.ThreeDayAgoAvgColumn.Width = 106;
+            // 
+            // SoldLast24hColumn
+            // 
+            this.SoldLast24hColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.SoldLast24hColumn.DataPropertyName = "SoldLast24h";
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
+            this.SoldLast24hColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            this.SoldLast24hColumn.HeaderText = "Sold last 24h";
+            this.SoldLast24hColumn.Name = "SoldLast24hColumn";
+            this.SoldLast24hColumn.ReadOnly = true;
+            this.SoldLast24hColumn.Width = 115;
+            // 
+            // MarketCapColumn
+            // 
+            this.MarketCapColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.MarketCapColumn.DataPropertyName = "MarketCap";
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black;
+            this.MarketCapColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            this.MarketCapColumn.HeaderText = "MarketCap";
+            this.MarketCapColumn.Name = "MarketCapColumn";
+            this.MarketCapColumn.ReadOnly = true;
+            this.MarketCapColumn.Width = 101;
+            // 
+            // NoteColumn
+            // 
+            this.NoteColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.NoteColumn.DataPropertyName = "Note";
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black;
+            this.NoteColumn.DefaultCellStyle = dataGridViewCellStyle9;
+            this.NoteColumn.HeaderText = "Note";
+            this.NoteColumn.Name = "NoteColumn";
             // 
             // progressBar
             // 
@@ -147,109 +251,6 @@
             this.leagueLabel.Size = new System.Drawing.Size(63, 20);
             this.leagueLabel.TabIndex = 5;
             this.leagueLabel.Text = "League";
-            // 
-            // NameColumn
-            // 
-            this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.NameColumn.DataPropertyName = "Name";
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            this.NameColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.NameColumn.HeaderText = "Name";
-            this.NameColumn.Name = "NameColumn";
-            this.NameColumn.ReadOnly = true;
-            this.NameColumn.Width = 70;
-            // 
-            // CurrentLowestColumn
-            // 
-            this.CurrentLowestColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.CurrentLowestColumn.DataPropertyName = "CurrentLow";
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.CurrentLowestColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.CurrentLowestColumn.HeaderText = "Current Low";
-            this.CurrentLowestColumn.Name = "CurrentLowestColumn";
-            this.CurrentLowestColumn.ReadOnly = true;
-            this.CurrentLowestColumn.Width = 109;
-            // 
-            // Low24hrColumn
-            // 
-            this.Low24hrColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Low24hrColumn.DataPropertyName = "Low24h";
-            this.Low24hrColumn.HeaderText = "24hr Low";
-            this.Low24hrColumn.Name = "Low24hrColumn";
-            this.Low24hrColumn.ReadOnly = true;
-            this.Low24hrColumn.Width = 91;
-            // 
-            // OneDayAgoAvgColumn
-            // 
-            this.OneDayAgoAvgColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.OneDayAgoAvgColumn.DataPropertyName = "OneDayAgoAvgString";
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
-            this.OneDayAgoAvgColumn.DefaultCellStyle = dataGridViewCellStyle4;
-            this.OneDayAgoAvgColumn.HeaderText = "Avg 1d Ago";
-            this.OneDayAgoAvgColumn.Name = "OneDayAgoAvgColumn";
-            this.OneDayAgoAvgColumn.ReadOnly = true;
-            this.OneDayAgoAvgColumn.Width = 106;
-            // 
-            // TwoDayAgoAvgColumn
-            // 
-            this.TwoDayAgoAvgColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.TwoDayAgoAvgColumn.DataPropertyName = "TwoDayAgoAvgString";
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
-            this.TwoDayAgoAvgColumn.DefaultCellStyle = dataGridViewCellStyle5;
-            this.TwoDayAgoAvgColumn.HeaderText = "Avg 2d Ago";
-            this.TwoDayAgoAvgColumn.Name = "TwoDayAgoAvgColumn";
-            this.TwoDayAgoAvgColumn.ReadOnly = true;
-            this.TwoDayAgoAvgColumn.Width = 106;
-            // 
-            // ThreeDayAgoAvgColumn
-            // 
-            this.ThreeDayAgoAvgColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.ThreeDayAgoAvgColumn.DataPropertyName = "ThreeDayAgoAvgString";
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
-            this.ThreeDayAgoAvgColumn.DefaultCellStyle = dataGridViewCellStyle6;
-            this.ThreeDayAgoAvgColumn.HeaderText = "Avg 3d Ago";
-            this.ThreeDayAgoAvgColumn.Name = "ThreeDayAgoAvgColumn";
-            this.ThreeDayAgoAvgColumn.ReadOnly = true;
-            this.ThreeDayAgoAvgColumn.Width = 106;
-            // 
-            // SoldLast24hColumn
-            // 
-            this.SoldLast24hColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.SoldLast24hColumn.DataPropertyName = "SoldLast24h";
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
-            this.SoldLast24hColumn.DefaultCellStyle = dataGridViewCellStyle7;
-            this.SoldLast24hColumn.HeaderText = "Sold last 24h";
-            this.SoldLast24hColumn.Name = "SoldLast24hColumn";
-            this.SoldLast24hColumn.ReadOnly = true;
-            this.SoldLast24hColumn.Width = 115;
-            // 
-            // MarketCapColumn
-            // 
-            this.MarketCapColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.MarketCapColumn.DataPropertyName = "MarketCap";
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black;
-            this.MarketCapColumn.DefaultCellStyle = dataGridViewCellStyle8;
-            this.MarketCapColumn.HeaderText = "MarketCap";
-            this.MarketCapColumn.Name = "MarketCapColumn";
-            this.MarketCapColumn.ReadOnly = true;
-            this.MarketCapColumn.Width = 101;
-            // 
-            // NoteColumn
-            // 
-            this.NoteColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.NoteColumn.DataPropertyName = "Note";
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black;
-            this.NoteColumn.DefaultCellStyle = dataGridViewCellStyle9;
-            this.NoteColumn.HeaderText = "Note";
-            this.NoteColumn.Name = "NoteColumn";
             // 
             // MainForm
             // 
